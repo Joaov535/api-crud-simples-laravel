@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
-Route::get('/list',  [ProductController::class, 'list'])->name('list');
-Route::get('/list/{id}',  [ProductController::class, 'listById'])->name('listById');
-
-Route::post('/create', [ProductController::class, 'create'])->name('create');
+Route::get('/products',  [ProductController::class, 'list']);
+Route::get('/products/{id}',  [ProductController::class, 'listById']);
+Route::post('/products', [ProductController::class, 'create']);
+Route::put('/products', [ProductController::class, 'edit']);
+Route::delete('/products/{id}', [ProductController::class, 'delete']);
