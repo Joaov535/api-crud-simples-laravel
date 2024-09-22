@@ -33,25 +33,27 @@ class ProductController extends Controller
     {
         try {
             $validateData = $request->validate([
-                'name'          => 'required|string|max:30',
-                'description'   => 'required|string|max:300',
-                'category'      => 'required|string|max:30',
-                'price'         => 'required|numeric',
-                'trademark'     => 'required|string|max:30'
+                '*.name'          => 'required|string|max:30',
+                '*.description'   => 'required|string|max:300',
+                '*.category'      => 'required|string|max:30',
+                '*.price'         => 'required|numeric',
+                '*.trademark'     => 'required|string|max:30'
             ]);
 
-            $product                = new Product();
-            $product->name          = $validateData['name'];
-            $product->description   = $validateData['description'];
-            $product->category      = $validateData['category'];
-            $product->price         = $validateData['price'];
-            $product->trademark     = $validateData['trademark'];
+            foreach ($validateData as $productData) {
 
-            $product->save();
+                $product                = new Product();
+                $product->name          = $productData['name'];
+                $product->description   = $productData['description'];
+                $product->category      = $productData['category'];
+                $product->price         = $productData['price'];
+                $product->trademark     = $productData['trademark'];
+
+                $product->save();
+            }
 
             return response()->json([
-                'message' => "produto criado com sucesso",
-                'product' => $product
+                'message' => "O cadastro foi realizado com sucesso"
             ]);
         } catch (\Exception $e) {
             return response()->json([
