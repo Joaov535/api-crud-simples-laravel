@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Middleware\BasicAuthentication;
 
-Route::middleware([BasicAuthentication::class])->group(function () {
+Route::post('/getToken', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/products',  [ProductController::class, 'list']);
     Route::get('/products/{id}',  [ProductController::class, 'listById']);
     Route::post('/products', [ProductController::class, 'create']);
